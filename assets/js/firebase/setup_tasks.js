@@ -5,18 +5,22 @@ const tasksContainer = document.getElementById("tasks-container");
 
 let id = "";
 let editStatus = false;
-
-window.addEventListener("DOMContentLoaded", () => {
+let userGlobal;
+  export default function setupTask(user)  {
+    userGlobal = user;
     onGetTask((querySnapshot) => {
         let html = '';
 
         // READ
         querySnapshot.forEach(doc => {
             const data = doc.data();
+            const date = new Date();
+            
 
             html += `
                 <div class="card mb-3">
                     <div class="card-body">
+                    <h6>${userGlobal.displayName}</h6>
                         <h4 class="card-title">${data.title}</h4>
                         <p class="card-text">${data.description}</p>
                         <div class="row">
@@ -57,18 +61,21 @@ window.addEventListener("DOMContentLoaded", () => {
             });
         });
     });
-});
+};
 
 // CREATE
 taskForm.addEventListener("submit", (e) => {
     // Evitamos que recargue la pagina
     e.preventDefault();
+    //obtenemos el nombre 
+    const userName = userGlobal.displayName;
+     
 
     const title = taskForm["task-title"].value;
     const description = taskForm["task-content"].value;
   // si no estoy editando el boton sirve para crear 
     if (!editStatus){
-        createTask(title, description);
+        createTask(title, description, userName);
     }
     else {
         updateTask(id, ({

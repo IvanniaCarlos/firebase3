@@ -1,0 +1,13 @@
+/* Estilo para el título */
+#card-title {
+    border: 1px solid #007bff; /* Borde de 1px de grosor y color azul */
+    padding: 5px 10px; /* Espaciado interno para el contenido */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  
+  /* Estilo para la descripción */
+  .card-text {
+    border: 1px solid #007bff; /* Borde de 1px de grosor y color azul */
+    padding: 5px 10px; /* Espaciado interno para el contenido */
+    border-radius: 4px; /* Bordes redondeados */
+  }
