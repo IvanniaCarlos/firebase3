@@ -20,8 +20,10 @@ let userGlobal;
             html += `
                 <div class="card mb-3">
                     <div class="card-body">
-                    <h6>${userGlobal.displayName}</h6>
-                        <h4 class="card-title">${data.title}</h4>
+                    <h2> ${data.userName}</h2>
+                    <h3 class="card-title">${data.date}</h3>
+                    <h4 class="card-title">${data.time}</h4>
+                      <h4 class="card-title">${data.title}</h4>
                         <p class="card-text">${data.description}</p>
                         <div class="row">
                             <button class='btn btn-danger btn-delete-custom mx-auto col-5' data-id='${doc.id}'>Delete</button>
@@ -67,15 +69,21 @@ let userGlobal;
 taskForm.addEventListener("submit", (e) => {
     // Evitamos que recargue la pagina
     e.preventDefault();
+
+   // FECHA
+   const fullDate = new Date();
+   const date = getFormattedDate (fullDate);
+   const time = getFormattedHour(fullDate);
+
     //obtenemos el nombre 
     const userName = userGlobal.displayName;
      
-
+    
     const title = taskForm["task-title"].value;
     const description = taskForm["task-content"].value;
   // si no estoy editando el boton sirve para crear 
     if (!editStatus){
-        createTask(title, description, userName);
+        createTask(title, description, userName, date,time);
     }
     else {
         updateTask(id, ({
@@ -91,3 +99,31 @@ taskForm.addEventListener("submit", (e) => {
 
     taskForm.reset();
 });
+
+
+function getFormattedDate(date) {
+    var year = date.getFullYear();
+  
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+  
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+    
+    return month + '/' + day + '/' + year;
+  }
+
+ function getFormattedHour(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+
+    if (hours < 10 ) {
+        hours = '0' + hours;
+    }
+
+    if (minutes < 10 ) {
+        minutes = '0' + minutes;
+    }
+    return hours + ':' + minutes;
+ }
+
